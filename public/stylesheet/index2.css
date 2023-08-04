@@ -1,0 +1,250 @@
+/* Variables */
+:root {
+  --color-primary-white: rgb(240, 240, 240);
+}
+
+/* Styling for the `main` element */
+body {
+  /* background-image: linear-gradient(
+    rgba(163, 240, 160, 0.5),
+    rgba(230, 221, 221, 0.961)
+  ); */
+  background-image: linear-gradient(
+    174.2deg,
+    rgb(249, 249, 249) 7.1%,
+    rgb(248, 248, 248) 67.4%
+  );
+}
+
+/* body {
+  background-size: 300% 300%;
+  background-image: linear-gradient(
+    -45deg,
+    yellow 0%,
+    yellow 25%,
+    yellow 51%,
+    #ff357f 100%
+  );
+  /* -webkit-animation: AnimateBG 20s ease infinite;
+  animation: AnimateBG 20s ease infinite; */
+/* }
+
+@-webkit-keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} */
+
+#cluster-map {
+  width: 100%;
+  height: 500px;
+  margin: 3% auto;
+}
+
+#map {
+  width: 100%;
+  height: 500px;
+  /* margin: 0px 20px; */
+  /* margin-top: 0px;
+  margin-bottom: 3%; */
+}
+
+.fullbody {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+/* .imgcon
+{
+  height: 400px;
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.divone
+{
+  w
+} */
+
+#imgcon {
+  height: 500px;
+  width: 80%;
+  margin: 30px auto;
+  background: url(https://t4.ftcdn.net/jpg/00/50/31/91/360_F_50319123_dGlaJWG6HfHScLi0nqP8WxjVIBTzJWUn.webp);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-bottom: 10px solid black;
+}
+.maindiv {
+  /* display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(370px, 370px));
+  gap: 15px; */
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0px;
+  /* float: left; */
+  /* width: 100vw;
+    height: 100vh; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  gap: 3rem;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Styling for the `.card` class */
+.card {
+  max-width: 22rem;
+  width: 28%;
+  min-width: 18rem !important;
+  height: 23rem;
+  /* border-radius: 30px;..................why width is not being able to put in % way */
+  /* border-collapse: collapse;
+   
+  /* perspective: 1px; */
+  /* border-radius: 15px;
+  overflow: hidden;
+  perspective: 1px; */
+  border: 3px solid grey !important;
+  border-radius: 5% !important;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  color: var(--color-primary-white);
+  box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for the `img` inside the card */
+.card img {
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+  transition: opacity 0.2s ease-out;
+}
+
+/* Styling for the `h2` inside the card */
+.card h2 {
+  position: absolute;
+  inset: auto auto 30px 30px;
+  color: rgb(234, 249, 249);
+  margin: 0;
+  transition: inset 0.3s 0.3s ease-out;
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+.card small {
+  overflow: hidden;
+}
+
+/* Styling for the `p` and `a` inside the card */
+.card p,
+.card a {
+  position: absolute;
+  opacity: 0;
+  color: rgb(240, 244, 246);
+  max-width: 80%;
+  transition: 0.3s ease-out;
+}
+
+/* Styling for the `p` inside the card */
+.card p {
+  inset: auto auto 80px 30px;
+  /* margin: 0px 0px 0px 0px; */
+  height: 100px;
+  overflow: hidden;
+}
+
+/* Styling for the `a` inside the card */
+.card a {
+  height: 30px;
+  width: 60%;
+  /* position: relative;
+  left: 30px; */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  inset: auto auto 40px 60px;
+  background-color: rgb(12, 12, 12);
+  border-radius: 15%;
+  color: rgb(240, 237, 237);
+  text-decoration: none;
+}
+
+/* Hover effects for the `.card` class */
+.card:hover {
+  border-color: linear-gradient(
+    15deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 111, 121, 0.9809173669467787) 35%,
+    rgba(0, 212, 255, 1) 100%
+  ) !important;
+}
+.card:hover h2 {
+  inset: auto auto 220px 30px;
+  transition: inset 0.3s ease-out;
+}
+
+.card:hover p,
+.card:hover a {
+  opacity: 1;
+  transition: opacity 0.5s 0.1s ease-in;
+}
+/* .card:hover a {
+  color: aquamarine;
+} */
+
+.card:hover img {
+  transition: opacity 0.3s ease-in;
+  opacity: 1;
+}
+
+/* Styling for the "material-symbols-outlined" class (not included in the original SCSS) */
+.material-symbols-outlined {
+  vertical-align: middle;
+}
+
+.nav-link {
+  padding: 0.25rem 0;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 1);
+  margin-left: 1rem;
+  border-bottom: 0.25rem solid transparent;
+}
+
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-link.active {
+  color: white;
+  border-bottom-color: white;
+}

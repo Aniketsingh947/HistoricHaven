@@ -9,7 +9,7 @@ mongoose
     console.log("Mongo Connection Open");
   })
   .catch((err) => {
-    console.log("Mongo Error");
+    console.log("Mongo Error");
   });
 const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
@@ -37,6 +37,7 @@ const seedDB = async () => {
       ],
     });
     await ncamp.save();
+    console.log("succesful");
   }
 };
 

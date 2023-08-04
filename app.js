@@ -15,22 +15,25 @@ const mongoose = require("mongoose");
 const Campground = require("./models/campground");
 const Review = require("./models/review");
 const campgroundRoutes = require("./routes/campgrounds");
+const ExpressError = require("./utils/ExpreeError.js");
 // const { campgroundSchema, reviewSchema } = require("./schemas.js");
 const reviewRoutes = require("./routes/reviews.js");
 const userRoutes = require("./routes/users.js");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+// const Mongostore = require("connect-mongo")(session);
+const dburl = process.env.DB_URL;
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 // const campground = require("./models/campground");
 mongoose
-  .connect(process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp")
+  .connect("mongodb://127.0.0.1:27017/yelp-camp") // dburl ||"mongodb://127.0.0.1:27017/yelp-camp"//mongo.exe is not present in mongodb bin folder and mongo -v is also not running in cmd
   .then(() => {
-    console.log("Mongo Connection Open");
+    console.log("Mongo Connection Open"); //ZZpyggs3hxfM1Zsg
   })
   .catch((err) => {
-    console.log("Mongo Error");
+    console.log("Mongo connection error");
   });
 
 const app = express();
@@ -41,9 +44,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(mongoSanitize());
 
+// const store = new Mongostore({
+//   //.create
+//   url: dburl,
+//   secret: "thisshouldbeabettersecret!",
+//   touchAfter: 24 * 3600,
+// });
+
+// store.on("error", function (e) {
+//   console.log("SESSION TIMEOUT", e);
+// });
+const secret = process.env.SECRET || "thisshouldbeabettersecret!";
+
 const sessionConfig = {
+  // store,
   name: "session",
-  secret: "thisshouldbeabettersecret!",
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -80,6 +96,17 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
-app.listen(3000, () => {
-  console.log("serving on port 3000");
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page Not Found", 404));
+});
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = "Oh No, Something Went Wrong!";
+  res.status(statusCode).render("error", { err });
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`serving on port ${port} `);
 });

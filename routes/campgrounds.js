@@ -7,7 +7,7 @@ const flash = require("connect-flash");
 const multer = require("multer");
 const { storage } = require("../cloudinary");
 const upload = multer({ storage });
-const { isLoggedIn, isAuthor } = require("../middleware");
+const { isLoggedIn, isAuthor, validateCampground } = require("../middleware");
 // router.get("/", (req, res) => {
 //   res.render("home");
 // });
@@ -19,6 +19,7 @@ router.post(
   "/",
   isLoggedIn,
   upload.array("image"),
+  validateCampground,
   catchAsync(campgrounds.createnew)
 );
 // router.post("/",  (req, res) => {
@@ -35,6 +36,7 @@ router.put(
   isLoggedIn,
   isAuthor,
   upload.array("image"),
+  validateCampground,
   campgrounds.updateform
 );
 

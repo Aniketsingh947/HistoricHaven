@@ -2,9 +2,11 @@ const Campground = require("../models/campground");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
+const { cloudinary } = require("../cloudinary");
+
 module.exports.index = async (req, res) => {
   const campgrounds = await Campground.find({});
-  res.render("campgrounds/index", { campgrounds });
+  res.render("campgrounds/indexano", { campgrounds });
 };
 
 module.exports.rendernewform = (req, res) => {
@@ -58,17 +60,40 @@ module.exports.editform = async (req, res) => {
   res.render("campgrounds/edit", { campground });
 };
 
+// module.exports.updateform = async (req, res) => {
+//   const { id } = req.params;
+//   const campground = await Campground.findByIdAndUpdate(id, {
+//     ...req.body.campground,
+//   });
+//   console.log(req.files);
+//   const imge = req.files.map((f) => ({ url: f.path, filename: f.filename }));
+//   campground.images.push(...imge);
+//   await campground.save();
+//   req.flash("success", "succssfully updated");
+//   res.redirect(`/campgrounds/${campground._id}`);
+// };
 module.exports.updateform = async (req, res) => {
   const { id } = req.params;
-  const campground = await Campground.findByIdAndUpdate(id, {
-    ...req.body.campground,
-  });
-  console.log(req.files);
-  const imge = req.files.map((f) => ({ url: f.path, filename: f.filename }));
-  campground.images.push(...imge);
+  //console.log(req.body);
+  const campground = await Campground.findById(id);
+  // console.log(req.files);
+  const arr = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
+  campground.images.push(...arr);
   await campground.save();
-  req.flash("success", "succssfully updated");
-  res.redirect(`/campgrounds/${campground._id}`);
+  if (req.body.deleteImages) {
+    for (let filename of req.body.deleteImages) {
+      await cloudinary.uploader.destroy(filename);
+    }
+    await campground.updateOne({
+      $pull: { images: { filename: { $in: req.body.deleteImages } } },
+    });
+  }
+  //console.log(campground.images);
+  await Campground.findByIdAndUpdate(id, { ...req.body.campground });
+  res.redirect(`/campgrounds/${id}`);
 };
 
 module.exports.deletecamp = async (req, res) => {
