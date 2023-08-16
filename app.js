@@ -30,7 +30,7 @@ const helmet = require("helmet");
 mongoose
   .connect(dburl) // dburl ||"mongodb://127.0.0.1:27017/yelp-camp"//mongo.exe is not present in mongodb bin folder and mongo -v is also not running in cmd
   .then(() => {
-    console.log("Mongo Connection Open"); //ZZpyggs3hxfM1Zsg
+    console.log("Mongo Connection Open");
   })
   .catch((err) => {
     console.log("Mongo connection error");
